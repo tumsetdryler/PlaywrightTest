@@ -1,22 +1,21 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  // Set up your network interception to block ads
+  // Set up network interception to block ads
   await page.route(/(ads|doubleclick|googlesyndication|tracker)/i, route => {
     route.abort();
   });
+
+  // Go to landing page
+  await page.goto('https://practice.expandtesting.com/');
 });
 
-test('has title', async ({ page }) => {
-  await page.goto('https://practice.expandtesting.com/');
-
+test('landing page has title', async ({ page }) => {
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle("Automation Testing Practice Website for QA and Developers | UI and API");
 });
 
-test('web inputs test', async ({ page }) => {
-  await page.goto('https://practice.expandtesting.com/');
-
+test('web inputs page positive functionality', async ({ page }) => {
   // Verify link is available and click
   await expect(page.getByRole('link', { name: 'Web inputs' })).toBeVisible();
   await page.getByRole('link', { name: 'Web inputs' }).click();
@@ -31,7 +30,7 @@ test('web inputs test', async ({ page }) => {
   await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
   await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
 
-  // Input values into each input
+  // Input values into each input field
   await page.getByRole('spinbutton', { name: 'Input: Number' }).click();
   await page.getByRole('spinbutton', { name: 'Input: Number' }).fill('32');
   await page.getByRole('textbox', { name: 'Input: Text' }).click();
