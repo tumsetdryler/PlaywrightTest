@@ -1,0 +1,64 @@
+import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  // Set up your network interception to block ads
+  await page.route(/(ads|doubleclick|googlesyndication|tracker)/i, route => {
+    route.abort();
+  });
+});
+
+test('has title', async ({ page }) => {
+  await page.goto('https://practice.expandtesting.com/');
+
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle("Automation Testing Practice Website for QA and Developers | UI and API");
+});
+
+test('web inputs test', async ({ page }) => {
+  await page.goto('https://practice.expandtesting.com/');
+
+  // Verify link is available and click
+  await expect(page.getByRole('link', { name: 'Web inputs' })).toBeVisible();
+  await page.getByRole('link', { name: 'Web inputs' }).click();
+
+  // Verify all inputs are visible and empty
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeVisible();
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
+
+  // Input values into each input
+  await page.getByRole('spinbutton', { name: 'Input: Number' }).click();
+  await page.getByRole('spinbutton', { name: 'Input: Number' }).fill('32');
+  await page.getByRole('textbox', { name: 'Input: Text' }).click();
+  await page.getByRole('textbox', { name: 'Input: Text' }).fill('bazinga');
+  await page.getByRole('textbox', { name: 'Input: Password' }).click();
+  await page.getByRole('textbox', { name: 'Input: Password' }).fill('planet');
+  await page.getByRole('textbox', { name: 'Input: Date' }).fill('2010-01-16');
+
+  // Click Display Inputs button
+  await page.getByRole('button', { name: 'Display Inputs' }).click();
+
+  // Verify each of outputs match input values
+  await expect(page.locator('#output-number')).toContainText('32');
+  await expect(page.locator('#output-text')).toContainText('bazinga');
+  await expect(page.locator('#output-password')).toContainText('planet');
+  await expect(page.locator('#output-date')).toContainText('2010-01-16');
+
+  // Clear the page with the Clear Inputs button
+  await page.getByRole('button', { name: 'Clear Inputs' }).click();
+
+  // Verify all inputs are visible and empty
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeVisible();
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
+});
