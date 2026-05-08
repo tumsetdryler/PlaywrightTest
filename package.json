@@ -1,0 +1,23 @@
+{
+  "name": "playwrighttesting",
+  "version": "1.0.0",
+  "description": "\"This repo is a self-study in Playwright, coming from someone who has used Selenium and Appium for automated testing.\"",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tumsetdryler/PlaywrightTest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tumsetdryler/PlaywrightTest/issues"
+  },
+  "homepage": "https://github.com/tumsetdryler/PlaywrightTest#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.2"
+  }
+}
