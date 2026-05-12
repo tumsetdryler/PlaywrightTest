@@ -33,7 +33,9 @@ test('landing page has title', async ({ page }) => {
   await expect(page).toHaveTitle("Automation Testing Practice Website for QA and Developers | UI and API");
 });
 
-test('web inputs page positive functionality', async ({ page, browserName }) => {
+test('web inputs page positive functionality', async ({ page, browserName, browser }) => {
+  console.log(browserName)
+  console.log(browser.version())
   // Verify link is available and click
   await expect(page.getByRole('link', { name: 'Web inputs' })).toBeVisible();
   await page.getByRole('link', { name: 'Web inputs' }).click();
@@ -51,12 +53,13 @@ test('web inputs page positive functionality', async ({ page, browserName }) => 
 
   // Input values into each input field
   await page.getByRole('spinbutton', { name: 'Input: Number' }).click();
-  await page.getByRole('spinbutton', { name: 'Input: Number' }).pressSequentially('32');
+  await page.getByRole('spinbutton', { name: 'Input: Number' }).fill('32');
   await page.getByRole('textbox', { name: 'Input: Text' }).click();
-  await page.getByRole('textbox', { name: 'Input: Text' }).pressSequentially('bazinga');
+  await page.getByRole('textbox', { name: 'Input: Text' }).fill('bazinga');
   await page.getByRole('textbox', { name: 'Input: Password' }).click();
-  await page.getByRole('textbox', { name: 'Input: Password' }).pressSequentially('planet');
+  await page.getByRole('textbox', { name: 'Input: Password' }).fill('planet');
   await page.getByRole('textbox', { name: 'Input: Date' }).click();
+  // Date function has special handling, so it is pressed sequentially.
   await page.getByRole('textbox', { name: 'Input: Date' }).pressSequentially('01162010');
 
   // Click Display Inputs button
