@@ -38,8 +38,16 @@ test('web inputs page positive functionality', async ({ page, browserName }) => 
   await expect(page.getByRole('link', { name: 'Web inputs' })).toBeVisible();
   await page.getByRole('link', { name: 'Web inputs' }).click();
 
-  await verify_web_inputs_fields(page);
-  console.log("Out of helper");
+  await page.waitForTimeout(500);
+
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeVisible();
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
 
   // Input values into each input field
   await page.getByRole('spinbutton', { name: 'Input: Number' }).click();
@@ -66,11 +74,16 @@ test('web inputs page positive functionality', async ({ page, browserName }) => 
   {
     await expect(page.locator('#output-date')).toContainText('2010-01-16');
   }
-  
-  
 
   // Clear the page with the Clear Inputs button
   await page.getByRole('button', { name: 'Clear Inputs' }).click();
 
-  await verify_web_inputs_fields(page);
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeVisible();
+  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
+  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
 });
