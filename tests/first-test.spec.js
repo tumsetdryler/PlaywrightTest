@@ -4,7 +4,6 @@ import { test, expect } from '@playwright/test';
 
 async function verify_web_inputs_fields(page) {
   // Verify all inputs are visible and empty
-  console.log("Helper started");
   await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
@@ -13,7 +12,6 @@ async function verify_web_inputs_fields(page) {
   await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
   await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
   await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
-  console.log("Helper finished");
 }
 
 // End Helper Functions
@@ -38,14 +36,7 @@ test('web inputs page positive functionality', async ({ page, browserName }) => 
   await expect(page.getByRole('link', { name: 'Web inputs' })).toBeVisible();
   await page.getByRole('link', { name: 'Web inputs' }).click();
 
-  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeVisible();
-  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeEmpty();
-  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
-  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
-  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
+  await verify_web_inputs_fields(page);
 
   // Input values into each input field
   await page.getByRole('spinbutton', { name: 'Input: Number' }).click();
@@ -70,12 +61,5 @@ test('web inputs page positive functionality', async ({ page, browserName }) => 
   // Clear the page with the Clear Inputs button
   await page.getByRole('button', { name: 'Clear Inputs' }).click();
 
-  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeVisible();
-  await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeEmpty();
-  await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeEmpty();
-  await expect(page.getByRole('textbox', { name: 'Input: Password' })).toBeEmpty();
-  await expect(page.getByRole('textbox', { name: 'Input: Date' })).toBeEmpty();
+  await verify_web_inputs_fields(page);
 });
