@@ -33,14 +33,10 @@ test('landing page has title', async ({ page }) => {
   await expect(page).toHaveTitle("Automation Testing Practice Website for QA and Developers | UI and API");
 });
 
-test('web inputs page positive functionality', async ({ page, browserName, browser }) => {
-  console.log(browserName)
-  console.log(browser.version())
+test('web inputs page positive functionality', async ({ page, browserName }) => {
   // Verify link is available and click
   await expect(page.getByRole('link', { name: 'Web inputs' })).toBeVisible();
   await page.getByRole('link', { name: 'Web inputs' }).click();
-
-  await page.waitForTimeout(500);
 
   await expect(page.getByRole('spinbutton', { name: 'Input: Number' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Input: Text' })).toBeVisible();
@@ -60,7 +56,7 @@ test('web inputs page positive functionality', async ({ page, browserName, brows
   await page.getByRole('textbox', { name: 'Input: Password' }).fill('planet');
   await page.getByRole('textbox', { name: 'Input: Date' }).click();
   // Date function has special handling, so it is pressed sequentially.
-  await page.getByRole('textbox', { name: 'Input: Date' }).pressSequentially('01162010');
+  await page.getByRole('textbox', { name: 'Input: Date' }).fill('2010-01-16');
 
   // Click Display Inputs button
   await page.getByRole('button', { name: 'Display Inputs' }).click();
@@ -69,14 +65,7 @@ test('web inputs page positive functionality', async ({ page, browserName, brows
   await expect(page.locator('#output-number')).toContainText('32');
   await expect(page.locator('#output-text')).toContainText('bazinga');
   await expect(page.locator('#output-password')).toContainText('planet');
-  if(browserName === 'webkit')
-  {
-    await expect(page.locator('#output-date')).toContainText('01162010');
-  }
-  else
-  {
-    await expect(page.locator('#output-date')).toContainText('2010-01-16');
-  }
+  await expect(page.locator('#output-date')).toContainText('2010-01-16');
 
   // Clear the page with the Clear Inputs button
   await page.getByRole('button', { name: 'Clear Inputs' }).click();
