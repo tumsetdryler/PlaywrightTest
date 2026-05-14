@@ -1,5 +1,5 @@
-// import { test, expect } from '@playwright/test';
 const {test, expect} = require('./fixtures');
+
 // Helper Functions
 
 async function verify_web_inputs_fields(page) {
@@ -15,16 +15,6 @@ async function verify_web_inputs_fields(page) {
 }
 
 // End Helper Functions
-
-// test.beforeEach(async ({ page }) => {
-//   // Set up network interception to block ads
-//   await page.route(/(ads|doubleclick|googlesyndication|tracker)/i, route => {
-//     route.abort();
-//   });
-
-//   // Go to landing page
-//   await page.goto('https://practice.expandtesting.com/');
-// });
 
 test('landing page has title', async ({ page }) => {
   // Expect a title "to contain" a substring.
